@@ -11,9 +11,16 @@ class BaseModel:
         """Initialization of the BaseModel class
         Conversion to ISO format
         """
-        self.id = str(uuid4())
-        self.created_at = datetime.datetime.now().isoformat()
-        self.updated_at = datetime.datetime.now().isoformat()
+        if kwargs:
+            for key, value in kwargs.items():
+                if key != '__class__':
+                    setattr(self, key, value)
+                    if key in ['created_at', 'updated_at']:
+                        setattr(self, key, datetime.datetime.fromisoformat(value))
+        else:
+            self.id = str(uuid4())
+            self.created_at = datetime.datetime.now().isoformat()
+            self.updated_at = datetime.datetime.now().isoformat()
 
     def __str__(self):
         """Converts to string"""
@@ -27,9 +34,3 @@ class BaseModel:
         """Creates a dictionary with attributes as key and
         its value as value"""
         return {key: value for key, value in self.__dict__.items()}
-        holder = self.__dict__.copy
-        if kwargs is not None:
-            for key, value in kwargs.items():
-                if key == created_at or key == updated_at:
-                    holder[key] = datetime.datetime.fromisoformat(value)
-            return holder
