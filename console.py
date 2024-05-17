@@ -7,18 +7,16 @@ class HBNBCommand(cmd.Cmd):
     prompt = "(hbnb)"
     
 
-    def do_cmdloop(self):
-        """parse through the line when a command is entered."""
-
-    def do_quit(self, args):
-        print('instructions on how to quit: press q then enter')
-    def do_EOF(self, line):
+    def do_quit(self, line):
+        """to quit the commadline interpter use the command quit."""
+        self.line = line
         return True
-    def do_greet(self, person):
-        """greet the person mentioned."""
-        self.person = person
-        if person:
-                print(f"hello {self.person}")
+    
+    def do_EOF(self, line):
+        """when an EOF is met it goes to a new line """
+        self.line = line
+        print()
+        return True
 
 if __name__=='__main__':
     HBNBCommand().cmdloop()
