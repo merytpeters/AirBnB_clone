@@ -25,32 +25,6 @@ class HBNBCommand(cmd.Cmd):
 
         pass
 
-    def do_create(self):
-        """creates a new instance of BaseModel, saves it and prints the Id"""
-        pass
-
-    def do_show(self):
-        """prints the string representation of an instance.
-           On the class name and Id.
-        """
-        pass
-
-    def do_destroy(self):
-        """deletes an instance based on class name and id."""
-        pass
-
-    def do_all(self):
-        """prints all string representation of all instances.
-            it can be based on or not on the class name.
-        """
-        pass
-
-    def update(self):
-        """updates an instance based on the class name and id.
-            this is by adding or updating attributes.
-        """
-        pass
-
 
 if __name__ == '__main__':
     HBNBCommand().cmdloop()
