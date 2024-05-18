@@ -1,4 +1,7 @@
 #!/usr/bin/python3
+"""The entry point of the command line."""
+
+
 from models.base_model import BaseModel
 import cmd
 
