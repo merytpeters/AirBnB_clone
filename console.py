@@ -2,8 +2,10 @@
 """The entry point of the command line."""
 
 
-from models.base_model import BaseModel
+import shlex
 import cmd
+from models.engine import file_storage
+from models.base_model import BaseModel
 
 
 class HBNBCommand(cmd.Cmd):
@@ -25,6 +27,58 @@ class HBNBCommand(cmd.Cmd):
 
     def emptyline(self):
         """Don't execute anything on empty line"""
+
+        pass
+
+    def do_create(self, arg):
+        """creates a new instance of BaseModel.
+        saves it and prints id.
+        """
+
+        if not arg:
+            print("** class name missing **")
+            return
+
+        # split argument
+        args = shlex.split(arg)
+        if len(args) == 0:
+            return
+
+        class_name = arg[0]
+
+        if class_name not in storage.classes:
+            print("** class doesn't exist **")
+            return
+
+        # creating new instance of the class
+        try:
+            new_instance = storage.classes[class_name]()
+            new_instance.save()
+            print(new_instance.id)
+        except Exception as e:
+            print("Error creating instance: {e}")
+
+    def do_show(self):
+        """prints the string representation of an instance.
+        it is based on the class name and id."""
+
+        pass
+
+    def do_destroy(self):
+        """deletes an instance based on class name and id.
+        saves changes into the JSON file."""
+
+        pass
+
+    def do_all(self):
+        """prints all string representation of all instances.
+        it is based or not on the class name."""
+
+        pass
+
+    def do_update(self):
+        """updates an instance based on the class name ans id.
+        this is by adding or updating attribute."""
 
         pass
 

@@ -1,8 +1,7 @@
 #!/usr/bin/python3
-"""Initialize BaseModel and FileStorage"""
-from models.base_model import BaseModel
-from models.engine.file_storage import FileStorage
+"""Initializes the FileStorage."""
 
+from models.engine.file_storage import FileStorage
 
 storage = FileStorage()
 storage.reload()
