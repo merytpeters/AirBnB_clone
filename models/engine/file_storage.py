@@ -14,6 +14,11 @@ class FileStorage:
     __file_path = "file.json"
     __objects = {}
 
+    # Mapping from class names to  class types
+    classes = {
+            'BaseModel': BaseModel
+        }
+
     def all(self):
         """Returns the dictionary __objects"""
 
@@ -42,5 +47,5 @@ class FileStorage:
                 for key, value in obj_dict.items():
                     class_name = value["__class__"]
                     self.__objects[key] = globals()[class_name](**value)
-        except FileNotfoundError:
+        except FileNotFoundError:
             pass
