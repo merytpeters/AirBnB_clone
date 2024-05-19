@@ -16,7 +16,6 @@ class FileStorage:
 
     def all(self):
         """Returns the dictionary __objects"""
-
         return FileStorage.__objects
 
     def new(self, obj):
@@ -47,9 +46,5 @@ class FileStorage:
                     class_name = key["__class__"]
                     del key["__class__"]
                     self.new(eval(class_name)(**key))
-
-                for key, value in obj_dict.items():
-                    class_name = value["__class__"]
-                    self.__objects[key] = class_dict[class_name](**value)
         except FileNotFoundError:
             pass
