@@ -7,6 +7,7 @@ import json
 from models.base_model import BaseModel
 from datetime import datetime
 
+
 class FileStorage:
     """performs serialization and deserialization"""
 
@@ -15,7 +16,7 @@ class FileStorage:
 
     def all(self):
         """Returns the dictionary __objects"""
-        
+
         return self.__objects
 
     def new(self, obj):
@@ -29,15 +30,17 @@ class FileStorage:
         """serializes __objects to the JSON file
         path: __file_path
         """
-        obj_dict = {key: obj.to_dict() for key,
-                obj in self.__objects.items()}
+        obj_dict = {key: obj.to_dict() for key, obj in self.__objects.items()}
         with open(self.__file_path, 'w') as f:
             json.dump(obj_dict, f)
 
     def reload(self):
         """deserilalizes the JSON file to __objects"""
-        with open(self.__file_path, 'r') as f:
-            obj_dict =  json.load(f)
-            for key, value in obj_dict.items():
-                class_name = value["__class__"]
-                self.__objects[key] =globals()[class_name](**value)
+        try:
+            with open(self.__file_path, 'r') as f:
+                obj_dict = json.load(f)
+                for key, value in obj_dict.items():
+                    class_name = value["__class__"]
+                    self.__objects[key] = globals()[class_name](**value)
+        except FileNotfoundError:
+            pass
