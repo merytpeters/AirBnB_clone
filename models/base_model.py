@@ -11,14 +11,13 @@ class BaseModel:
         """Initialization of the BaseModel class
         Conversion to ISO format
         """
-        if (kwargs):
+        if len(kwargs):
+            iso_format = "%Y-%m-%dT%H:%M:%S.%f"
             for key, value in kwargs.items():
-                if key != '__class__':
-                    setattr(self, key, value)
-                    if key in ['created_at', 'updated_at']:
-                        self.__dict__[key] = datetime.fromisoformat(value)
-                    else:
-                        self.__dict__[key] = value
+                if key in ['created_at', 'updated_at']:
+                    self.__dict__[key] = datetime.strptime(value, iso_format)
+                else:
+                    self.__dict__[key] = value
 
         else:
             self.id = str(uuid4())
