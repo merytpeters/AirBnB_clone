@@ -15,10 +15,11 @@ class FileStorage:
     __objects = {}
 
     def __init__(self):
+
         """Initialize the Filestorage instance."""
-        self.classes = {
-                'BaseModel': BaseModel
-                }
+
+        pass
+
 
     def all(self):
         """Returns the dictionary __objects"""
