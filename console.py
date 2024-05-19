@@ -4,14 +4,13 @@
 
 import shlex
 import cmd
-from models import storage
+from models.engine import file_storage
 from models.base_model import BaseModel
 
 
 class HBNBCommand(cmd.Cmd):
     prompt = "(hbnb)"
 
-    
     def do_quit(self, line):
         """Quit command to exit the program"""
         return True
@@ -51,12 +50,12 @@ class HBNBCommand(cmd.Cmd):
             print("** class doesn't exist **")
             return
 
-        #creating new instance of the class
+        # creating new instance of the class
         try:
             new_instance = storage.classes[class_name]()
             new_instance.save()
             print(new_instance.id)
-        except Exception  as e:
+        except Exception as e:
             print("Error creating instance: {e}")
 
     def do_show(self):
