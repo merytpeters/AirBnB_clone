@@ -16,9 +16,9 @@ class FileStorage:
 
     def __init__(self):
         """Initialize the Filestorage instance."""
-    self.classes = {
-            'BaseModel': BaseModel
-        }
+        self.classes = {
+                'BaseModel': BaseModel
+                }
 
     def all(self):
         """Returns the dictionary __objects"""
