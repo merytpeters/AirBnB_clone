@@ -2,6 +2,7 @@
 """The start of the airbnb clone"""
 from uuid import uuid4
 from datetime import datetime
+import models
 
 
 class BaseModel:
@@ -14,7 +15,7 @@ class BaseModel:
         if len(kwargs):
             iso_format = "%Y-%m-%dT%H:%M:%S.%f"
             for key, value in kwargs.items():
-                if key in ['created_at', 'updated_at']:
+                if key in ["created_at", "updated_at"]:
                     self.__dict__[key] = datetime.strptime(value, iso_format)
                 else:
                     self.__dict__[key] = value
@@ -23,6 +24,7 @@ class BaseModel:
             self.id = str(uuid4())
             self.created_at = datetime.now()
             self.updated_at = datetime.now()
+            models.storage.new(self)
 
     def __str__(self):
         """Converts to string"""
@@ -30,7 +32,8 @@ class BaseModel:
 
     def save(self):
         """Updates to current time"""
-        return self.updated_at
+        self.updated_at = datetime.now()
+        models.storage.save()
 
     def to_dict(self):
         """Creates a dictionary with attributes as key and
