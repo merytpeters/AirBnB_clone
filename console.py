@@ -4,7 +4,6 @@
 
 import shlex
 import cmd
-from models import storage, class_dict
 from models.base_model import BaseModel
 
 
