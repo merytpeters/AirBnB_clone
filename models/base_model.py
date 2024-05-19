@@ -1,7 +1,7 @@
 #!/usr/bin/python3
 """The start of the airbnb clone"""
 from uuid import uuid4
-import datetime
+from datetime import datetime
 
 
 class BaseModel:
@@ -11,16 +11,19 @@ class BaseModel:
         """Initialization of the BaseModel class
         Conversion to ISO format
         """
-        if kwargs:
+        if (kwargs):
             for key, value in kwargs.items():
                 if key != '__class__':
                     setattr(self, key, value)
                     if key in ['created_at', 'updated_at']:
-                        setattr(self, key, datetime.datetime.fromisoformat(value))
+                        self.__dict__[key] = datetime.fromisoformat(value)
+                    else:
+                        self.__dict__[key] = value
+
         else:
             self.id = str(uuid4())
-            self.created_at = datetime.datetime.now().isoformat()
-            self.updated_at = datetime.datetime.now().isoformat()
+            self.created_at = datetime.now()
+            self.updated_at = datetime.now()
 
     def __str__(self):
         """Converts to string"""
@@ -33,4 +36,9 @@ class BaseModel:
     def to_dict(self):
         """Creates a dictionary with attributes as key and
         its value as value"""
-        return {key: value for key, value in self.__dict__.items()}
+        dict_obj = self.__dict__.copy()
+        dict_obj["created_at"] = self.created_at.isoformat()
+        dict_obj["updated_at"] = self.updated_at.isoformat()
+        dict_obj["__class__"] = self.__class__.__name__
+
+        return dict_obj
