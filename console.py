@@ -4,7 +4,7 @@
 
 import shlex
 import cmd
-from models.engine import file_storage
+from models import storage, class_dict
 from models.base_model import BaseModel
 
 
@@ -46,13 +46,13 @@ class HBNBCommand(cmd.Cmd):
 
         class_name = arg[0]
 
-        if class_name not in storage.classes:
+        if class_name not in class_dict:
             print("** class doesn't exist **")
             return
 
         # creating new instance of the class
         try:
-            new_instance = storage.classes[class_name]()
+            new_instance = class_dict[class_name]()
             new_instance.save()
             print(new_instance.id)
         except Exception as e:
