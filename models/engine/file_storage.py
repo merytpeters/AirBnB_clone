@@ -14,8 +14,9 @@ class FileStorage:
     __file_path = "file.json"
     __objects = {}
 
-    # Mapping from class names to  class types
-    classes = {
+    def __init__(self):
+        """Initialize the Filestorage instance."""
+    self.classes = {
             'BaseModel': BaseModel
         }
 
@@ -46,6 +47,6 @@ class FileStorage:
                 obj_dict = json.load(f)
                 for key, value in obj_dict.items():
                     class_name = value["__class__"]
-                    self.__objects[key] = globals()[class_name](**value)
+                    self.__objects[key] = self.classes[class_name](**value)
         except FileNotFoundError:
             pass
