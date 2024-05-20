@@ -61,11 +61,35 @@ class HBNBCommand(cmd.Cmd):
         except Exception as e:
             print("Error creating instance: {e}")
 
-    def do_show(self):
+    def do_show(self, arg):
         """prints the string representation of an instance.
         it is based on the class name and id."""
 
-        pass
+        if not arg:
+            print("** class name missing **")
+            return
+
+        args = shlex.split(arg)
+
+        if len(args) == 0:
+            print("** instance id missing **")
+            return
+
+        class_name = args[0]
+        obj_id = args[1]
+
+        if class_name not in globals():
+            print("** class doesn't exist **")
+            return
+
+        key = class_name + "." + obj_id
+        objects = storage.all()
+        obj = objects.get(key)
+
+        if obj:
+            print(obj)
+        else:
+            print(" ** no instance found **")
 
     def do_destroy(self):
         """deletes an instance based on class name and id.
