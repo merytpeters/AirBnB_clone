@@ -6,12 +6,6 @@ It also deserializes JSON file to instances.
 import json
 import os
 from models.base_model import BaseModel
-from models.user import User
-from models.amenity import Amenity
-from models.city import City
-from models.place import Place
-from models.state import State
-from models.review import Review
 from datetime import datetime
 
 
@@ -20,15 +14,6 @@ class FileStorage:
 
     __file_path = "file.json"
     __objects = {}
-    class_map = {
-        "BaseModel": BaseModel,
-        "User": User,
-        "Amenity": Amenity,
-        "City": City,
-        "Place": Place,
-        "State": State,
-        "Review": Review,
-    }
 
     def __init__(self):
         if not os.path.exists(FileStorage.__file_path):
