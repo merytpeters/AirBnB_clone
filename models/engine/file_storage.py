@@ -4,6 +4,7 @@ It also deserializes JSON file to instances.
 """
 
 import json
+import os
 from models.base_model import BaseModel
 from datetime import datetime
 
@@ -13,6 +14,11 @@ class FileStorage:
 
     __file_path = "file.json"
     __objects = {}
+
+    def __init__(self):
+        if not os.path.exists(FileStorage.__file_path):
+            with open(FileStorage.__file_path, 'w') as f:
+                f.write('{}')
 
     def all(self):
         """Returns the dictionary __objects"""

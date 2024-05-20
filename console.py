@@ -44,7 +44,7 @@ class HBNBCommand(cmd.Cmd):
         if len(args) == 0:
             return
 
-        class_name = arg[0]
+        class_name = args[0]
 
         if class_name not in globals():
             print("** class doesn't exist **")
@@ -55,7 +55,7 @@ class HBNBCommand(cmd.Cmd):
 
         # create new instance of the class
         try:
-            new_instance = classes
+            new_instance = classes()
             new_instance.save()
             print(new_instance.id)
         except Exception as e:
