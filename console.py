@@ -5,6 +5,7 @@
 import shlex
 import cmd
 from models.base_model import BaseModel
+from models import storage
 
 
 class HBNBCommand(cmd.Cmd):
@@ -45,13 +46,16 @@ class HBNBCommand(cmd.Cmd):
 
         class_name = arg[0]
 
-        if class_name not in class_dict:
+        if class_name not in globals():
             print("** class doesn't exist **")
             return
 
-        # creating new instance of the class
+        # dynamically get the class from the global
+        classes = globals()[class_name]
+
+        # create new instance of the class
         try:
-            new_instance = class_dict[class_name]()
+            new_instance = classes
             new_instance.save()
             print(new_instance.id)
         except Exception as e:
