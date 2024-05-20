@@ -42,9 +42,12 @@ class FileStorage:
             with open(FileStorage.__file_path, 'r') as f:
                 obj_dict = json.load(f)
 
-                for key in obj_dict.values():
-                    class_name = key["__class__"]
-                    del key["__class__"]
-                    self.new(eval(class_name)(**key))
+                for key, value in obj_dict.items():
+                    class_name = value["__class__"]
+                    classes = globals().get(class_name)
+                    # del key["__class__"]
+                    # self.new(eval(class_name)(**key))
+                    if classes:
+                        self.new(classes(**value))
         except FileNotFoundError:
             pass
