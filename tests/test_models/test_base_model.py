@@ -21,12 +21,12 @@ class TestBaseModel(unittest.TestCase):
         self.assertIsInstance(self.instance.updated_at, datetime)
 
     def test_new_attributes(self):
-        self.assertIsInstance(self.instance.id)
+        self.assertIsInstance(self.instance.id, str)
 
     def test_id_unique(self):
         """Test that id is unique"""
         base1 = BaseModel()
-        self.assertIsNotEqual(self.instance.id, base1.id)
+        self.assertNotEqual(self.instance.id, base1.id)
 
 
 if __name__ == '__main__':
