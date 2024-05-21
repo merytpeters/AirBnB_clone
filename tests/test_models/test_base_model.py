@@ -30,6 +30,7 @@ class TestBaseModel(unittest.TestCase):
         self.assertNotEqual(self.model.id, base1.id)
 
     def test_to_dict(self):
+        """Test that Dictionary Works"""
         model_dict = self.model.to_dict()
         self.assertIsInstance(model_dict, dict)
         self.assertEqual(model_dict['__class__'], 'BaseModel')
@@ -37,6 +38,7 @@ class TestBaseModel(unittest.TestCase):
         self.assertEqual(model_dict['updated_at'], str)
 
     def test_recreation_from_dict(self):
+        """Test that recreation of instance from dictionary Works"""
         model_dict = self.model.to_dict()
         new_model = BaseModel(**model_dict)
         self.assertIsInstance(new_model, BaseModel)
@@ -45,6 +47,7 @@ class TestBaseModel(unittest.TestCase):
         self.assertEqual(new_model.updated_at, self.model.updated_at)
 
     def test_save(self):
+        """Test thst save method updated the time in updated_at"""
         old_updated_at = self.model.updated_at
         self.model.save()
         self.assertNotEqual(self.model.updated_at, old_updated_at)
