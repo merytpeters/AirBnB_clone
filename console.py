@@ -21,18 +21,18 @@ class HBNBCommand(cmd.Cmd):
         print("Quit command to exit the program\n")
 
     def do_EOF(self, line):
-        """when an EOF is met it goes to a new line """
+        """when an EOF is met it goes to a new line"""
         print()
         return True
 
     def emptyline(self):
-        """Don't execute anything on empty line"""
+        """Dont execute anything on empty line"""
 
         pass
 
     def do_create(self, arg):
-        """creates a new instance of BaseModel.
-        saves it and prints id.
+        """Creates a new instance of BaseModel.
+        Saves it and prints id.
         """
 
         if not arg:
@@ -62,8 +62,8 @@ class HBNBCommand(cmd.Cmd):
             print("Error creating instance: {e}")
 
     def do_show(self, arg):
-        """prints the string representation of an instance.
-        it is based on the class name and id."""
+        """prints the string representation of an instance. it is based on
+        the class name and id."""
 
         if not arg:
             print("** class name missing **")
@@ -104,7 +104,6 @@ class HBNBCommand(cmd.Cmd):
         if len(args) < 2:
             print("** instance id missing **")
             return
-        
         class_name = args[0]
         obj_id = args[1]
 
@@ -133,23 +132,23 @@ class HBNBCommand(cmd.Cmd):
             if class_name not in globals():
                 print("** class doesn't exist **")
                 return
-        
-            for key, obj in all_objects.items():
-                if key.split('.')[0] == class_name:
-                    obj_list.append(str(obj))
+
+        for key, obj in all_objects.items():
+            if key.split('.')[0] == class_name:
+                obj_list.append(str(obj))
         print(obj_list)
 
     def do_update(self, arg):
-        """updates an instance based on the class name ans id.
-        this is by adding or updating attribute."""
+        """Updates an instance based on the class name ans id
+        This is by adding or updating attribute"""
 
         args = shlex.split(arg)
         if len(args) < 1:
             print("** class name missing **")
             return
-        
+
         class_name = args[0]
-        
+
         if class_name not in globals():
             print("** class doesn't exist **")
             return
@@ -158,7 +157,7 @@ class HBNBCommand(cmd.Cmd):
         if len(args) < 2:
             print("** instance id missing **")
             return
-        
+
         obj_id = args[1]
 
         # key to access objects from storage
@@ -168,7 +167,7 @@ class HBNBCommand(cmd.Cmd):
         if key not in obj_dict:
             print("** no instance found **")
             return
-        
+
         # check for attribute name
         if len(args) < 3:
             print("** attribute name missing **")
@@ -180,7 +179,7 @@ class HBNBCommand(cmd.Cmd):
             print("** can't update attribute **")
             return
 
-        #check for attribute value
+        #  check for attribute value
         if len(args) < 4:
             print("** value missing **")
             return
@@ -201,14 +200,15 @@ class HBNBCommand(cmd.Cmd):
                 elif isinstance(class_attr, float):
                     setattr(obj, attr_name, float(attr_value))
                 else:
-                    print("** argument type should a string, integer or float **")
+                    print("** argument type should a string, "
+                          "integer or float **")
             except ValueError:
                 print("** invalid value type **")
         else:
             print("** attribute doesn't exist **")
             return
-        
-        # save
+
+        #  save
         obj.save()
 
 
