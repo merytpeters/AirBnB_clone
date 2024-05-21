@@ -34,8 +34,11 @@ class TestBaseModel(unittest.TestCase):
         model_dict = self.model.to_dict()
         self.assertIsInstance(model_dict, dict)
         self.assertEqual(model_dict['__class__'], 'BaseModel')
-        self.assertEqual(model_dict['created_at'], str)
-        self.assertEqual(model_dict['updated_at'], str)
+        self.assertIsInstance(model_dict['created_at'], str)
+        self.assertIsInstance(model_dict['updated_at'], str)
+        self.assertIn('id', model_dict)
+        self.assertIn('created_at', model_dict)
+        self.assertIn('updated_at', model_dict)
 
     def test_recreation_from_dict(self):
         """Test that recreation of instance from dictionary Works"""
@@ -45,6 +48,8 @@ class TestBaseModel(unittest.TestCase):
         self.assertEqual(new_model.id, self.model.id)
         self.assertEqual(new_model.created_at, self.model.created_at)
         self.assertEqual(new_model.updated_at, self.model.updated_at)
+        datetime.fromisoformat(model_dict['created_at'])
+        datetime.fromisoformat(model_dict['updated_at'])
 
     def test_save(self):
         """Test thst save method updated the time in updated_at"""
