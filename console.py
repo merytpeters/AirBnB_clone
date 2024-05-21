@@ -143,7 +143,73 @@ class HBNBCommand(cmd.Cmd):
         """updates an instance based on the class name ans id.
         this is by adding or updating attribute."""
 
-        pass
+        args = shlex.split(arg)
+        if len(args) < 1:
+            print("** class name missing **")
+            return
+        
+        class_name = args[0]
+        
+        if class_name not in globals():
+            print("** class doesn't exist **")
+            return
+
+        # check for instance id
+        if len(args) < 2:
+            print("** instance id missing **")
+            return
+        
+        obj_id = args[1]
+
+        # key to access objects from storage
+        key = f"{class_name}.{obj_id}"
+        obj_dict = storage.all()
+
+        if key not in obj_dict:
+            print("** no instance found **")
+            return
+        
+        # check for attribute name
+        if len(args) < 3:
+            print("** attribute name missing **")
+            return
+
+        attr_name = args[2]
+
+        if attr_name in ["id", "created_at", "updated_at"]:
+            print("** can't update attribute **")
+            return
+
+        #check for attribute value
+        if len(args) < 4:
+            print("** value missing **")
+            return
+
+        attr_value = "  ".join(args[3:])
+
+        # retrieving object
+        obj = obj_dict[key]
+
+        # set value to attribute to correct type
+        if hassattr(obj, attr_name):
+            class_attr = getatrr(obj, attr_name)
+            try:
+                if isinstance(class_attr, str):
+                    setattr(obj, attr_name, atrr_value)
+                elif isinstance(class_attr, int):
+                    setattr(obj, attr_name, int(atrr_value))
+                elif isinstance(class_attr, float):
+                    setattr(obj, attr_name, float(attr_value))
+                else:
+                    print("** argument type should a string, integer or float **")
+            except ValueError:
+                print("** invalid value type **")
+        else:
+            print("** attribute doesn't exist **")
+            return
+        
+        # save
+        obj.save()
 
 
 if __name__ == '__main__':
