@@ -30,18 +30,14 @@ class HBNBCommand(cmd.Cmd):
 
         pass
 
-    def do_create(self, arg):
+    def do_create(self, line):
         """Creates a new instance of BaseModel.
         Saves it and prints id.
         """
 
-        if not arg:
+        args = line.split(" ")
+        if line == "":
             print("** class name missing **")
-            return
-
-        # split argument
-        args = shlex.split(arg)
-        if len(args) == 0:
             return
 
         class_name = args[0]
@@ -61,51 +57,60 @@ class HBNBCommand(cmd.Cmd):
         except Exception as e:
             print("Error creating instance: {e}")
 
-    def do_show(self, arg):
+    def do_show(self, line):
         """prints the string representation of an instance. it is based on
         the class name and id."""
 
-        if not arg:
+        args = line.split(" ")
+        if line == "":
             print("** class name missing **")
             return
 
-        args = shlex.split(arg)
+        class_name = args[0]
 
         if len(args) < 2:
-            print("** instance id missing **")
-            return
+            if class_name not in globals():
+                print("** class doesn't exist **")
+                return
+            else:
+                print("** instance id missing **")
+                return
 
-        class_name = args[0]
         obj_id = args[1]
-
-        if class_name not in globals():
-            print("** class doesn't exist **")
-            return
 
         key = class_name + "." + obj_id
         objects = storage.all()
         obj = objects.get(key)
 
-        if obj:
+        if obj is not None:
             print(obj)
         else:
             print(" ** no instance found **")
 
-    def do_destroy(self, arg):
+    def do_destroy(self, line):
         """deletes an instance based on class name and id.
         saves changes into the JSON file."""
 
-        args = shlex.split(arg)
+        args = line.split(" ")
 
-        if not args:
+        if line == "":
             print("** class name missing **")
             return
 
-        if len(args) < 2:
-            print("** instance id missing **")
-            return
         class_name = args[0]
+        if len(args) < 2:
+            if class_name not in globals():
+                print("** class doesn't exist **")
+                return
+            else:
+                print("** instance id missing **")
+                return
+
         obj_id = args[1]
+
+        if class_name not in globals():
+            print("** class doesn't exist **")
+            return
 
         key = f"{class_name}.{obj_id}"
         all_objects = storage.all()
