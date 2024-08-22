@@ -68,11 +68,11 @@ class HBNBCommand(cmd.Cmd):
 
         class_name = args[0]
 
-        if len(args) < 2:
+        if len(args):
             if class_name not in globals():
                 print("** class doesn't exist **")
                 return
-            else:
+            elif len(args) < 2:
                 print("** instance id missing **")
                 return
 
@@ -98,11 +98,11 @@ class HBNBCommand(cmd.Cmd):
             return
 
         class_name = args[0]
-        if len(args) < 2:
+        if len(args):
             if class_name not in globals():
                 print("** class doesn't exist **")
                 return
-            else:
+            elif len(args) < 2:
                 print("** instance id missing **")
                 return
 
